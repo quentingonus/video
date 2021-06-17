@@ -12,6 +12,9 @@
 
 <body>
     <div class="root">
+        <!-- <div>
+            <button @click="listfolder(null, prevFolder)">{{ prevFolder }}</button>
+        </div> -->
         <div v-if="video">
             <p>{{ videoName }}</p>
             <p>{{ videoSize }}</p>
@@ -21,15 +24,17 @@
             <div v-if="currentfolder.folders.length > 0">
                 <h1>Folders</h1>
                 <ol>
-                    <li v-for="file in currentfolder.folders">{{ file.name }} <button @click="listfolder(file.id)">View
-                            Episodes</button></li>
+                    <li v-for="file in currentfolder.folders">
+                        {{ file.name }}
+                        <button @click="listfolder(null, file)">View Episodes</button>
+                    </li>
                 </ol>
             </div>
             <div v-if="currentfolder.files.length > 0">
                 <h1>Files</h1>
                 <ol>
                     <li v-for="file in currentfolder.files">{{ file.name }}
-                        <button @click="download(file.link)">Download</button>&emsp;
+                        <!-- <button @click="download(file.link)">Download</button>&emsp; -->
                         <button @click="playthis(file)">Play</button>
                     </li>
                 </ol>

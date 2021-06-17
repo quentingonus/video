@@ -2,7 +2,8 @@ new Vue({
     el: '.root',
     data: {
         cf: null,
-        mainfolder: "ce49c566-9127-45e5-b6c7-8042fbe809cb",
+        prevFolder: "root/",
+        mainfolder: "3000138a-1c2d-4acb-b666-ceb966d59f24",
         api: "EQoxr5zYQI2hRwO3xO7dxyjhwMZcplwh",
         video: null,
         cf: null
@@ -74,8 +75,14 @@ new Vue({
         }
     },
     methods: {
-        listfolder(id) {
-            console.log("Getting " + id);
+        listfolder(fid, folder) {
+            if (folder != null && this.prevFolder == "root/") {
+                this.prevFolder = `root/${folder.name}/`
+            } else if (folder != null && this.prevFolder != "root/") {
+                this.prevFolder += `/${folder.name}/`
+            }
+            const id = folder == null ? fid : folder.id;
+            console.log("Listing " + id);
             link = `https://api.gofile.io/getFolder?folderId=${id}&token=${this.api}&cache=true`;
             axios.get(link)
                 .then(({ data }) => { this.cf = data.data.contents })
@@ -97,7 +104,7 @@ new Vue({
         }
     },
     created() {
-        this.listfolder(this.mainfolder);
+        this.listfolder(this.mainfolder, null);
     }
 
 });
